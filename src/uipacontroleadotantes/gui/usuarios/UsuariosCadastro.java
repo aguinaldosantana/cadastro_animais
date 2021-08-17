@@ -80,6 +80,11 @@ public class UsuariosCadastro extends javax.swing.JInternalFrame {
 
         txtLogin.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(204, 204, 204), 1, true));
         txtLogin.setName(""); // NOI18N
+        txtLogin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtLoginActionPerformed(evt);
+            }
+        });
         txtLogin.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txtLoginKeyReleased(evt);
@@ -273,6 +278,7 @@ public class UsuariosCadastro extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnLimparActionPerformed
 
     private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarActionPerformed
+        if (verificarCamposObrigatorios()){ 
         if ((txtSenha.getPassword().length < 0) || (!Arrays.equals(txtSenha.getPassword(), txtConfirmaSenha.getPassword()))) {
             JOptionPane.showMessageDialog(null, "VERIFIQUE AS CREDÊNCIAIS.");
             return;
@@ -291,6 +297,7 @@ public class UsuariosCadastro extends javax.swing.JInternalFrame {
         }
         limparCampos();
         model.addRow(usuarioBean);
+        }
     }//GEN-LAST:event_btnCadastrarActionPerformed
 
     private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
@@ -314,11 +321,16 @@ public class UsuariosCadastro extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txtLoginKeyReleased
 
     private void btnAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtualizarActionPerformed
-
-        if ((txtSenha.getPassword().length < 1) || (!txtSenha.getPassword().equals(txtConfirmaSenha.getPassword()))) {
-            JOptionPane.showMessageDialog(null, "VERIFIQUE AS CREDÊNCIAIS.");
+        if (verificarCamposObrigatorios()){
+       /*if ((txtSenha.getPassword().length < 1) || (!txtSenha.getPassword().equals(txtConfirmaSenha.getPassword()))) {
+            JOptionPane.showMessageDialog(null, "VERIFIQUE AS CREDENCIAIS.");
             return;
         }
+       if (txtSenha.getPassword() == (txtConfirmaSenha.getPassword())) {
+            JOptionPane.showMessageDialog(null, "VERIFIQUE AS CREDENCIAIS.");
+            return;
+        }
+        */
         UsuariosBean usuarioBean = new UsuariosBean();
         int linha = tblUsuarios.getSelectedRow();
         if (linha < 0) {
@@ -328,28 +340,29 @@ public class UsuariosCadastro extends javax.swing.JInternalFrame {
         usuarioBean.setCodUsuario(codUsuario);
         usuarioBean.setLogin(txtLogin.getText());
         usuarioBean.setSenha(Sanitize.sanitizar(txtSenha.getPassword()));
-
+ 
         UsuariosDAO usuariosDAO = new UsuariosDAO();
 
         try {
-            usuariosDAO.alterarSenha(usuarioBean);
+            usuariosDAO.alterar(usuarioBean);
         } catch (SQLException ex) {
             Logger.getLogger(UsuariosCadastro.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         model.setValueAt(String.valueOf(codUsuario), linha, 0);
         model.setValueAt(txtLogin.getText(), linha, 1);
+        model.setValueAt(txtSenha.getPassword(), linha, 1);
 
         limparCampos();
+        }
     }//GEN-LAST:event_btnAtualizarActionPerformed
 
     private void btnPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarActionPerformed
         UsuariosDAO usuariosDAO = new UsuariosDAO();
         limparModel();
         if (!txtLogin.getText().equals("")) {
-            usuariosDAO.listarUsuarios(txtLogin.getText()).forEach((adotantes) -> {
-                model.addRow(adotantes);
-            });
+            usuariosDAO.listarUsuarios(txtLogin.getText()).forEach( ( usuarios ) -> {  
+                model.addRow( usuarios );}  );
         }
     }//GEN-LAST:event_btnPesquisarActionPerformed
 
@@ -371,6 +384,10 @@ public class UsuariosCadastro extends javax.swing.JInternalFrame {
             limparCampos();
         }
     }//GEN-LAST:event_btnExcluirActionPerformed
+
+    private void txtLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtLoginActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtLoginActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -436,3 +453,16 @@ public class UsuariosCadastro extends javax.swing.JInternalFrame {
         return true;
     }
 }
+/*private boolean verificarCamposObrigatorios() {
+        if (txtNome.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "CAMPO NOME VAZIO.");
+            txtNome.requestFocus();
+            return false;
+        }
+        if (txtDescricao.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "CAMPO DESCRIÇÃO VAZIO.");
+            txtDescricao.requestFocus();
+            return false;
+        }
+        return true;
+    }*/

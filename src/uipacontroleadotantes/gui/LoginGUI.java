@@ -219,8 +219,8 @@ public class LoginGUI extends javax.swing.JFrame {
             System.out.println("CREDENCIAIS ACEITAS.");
             try {
                 permitido = future.get(10, TimeUnit.SECONDS);
-            } catch (InterruptedException | ExecutionException | TimeoutException ex) {
-                JOptionPane.showMessageDialog(null, "ERRO: " + ex.getMessage());
+            } catch (InterruptedException | ExecutionException | TimeoutException | NullPointerException ex) {
+                
             }
             loading.dispose();
             if (permitido) {

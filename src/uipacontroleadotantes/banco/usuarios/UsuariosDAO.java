@@ -65,15 +65,16 @@ public class UsuariosDAO {
     return id;
   }
 
-  public void alterarSenha(UsuariosBean usuarios) throws SQLException {
+  public void alterar(UsuariosBean usuarios) throws SQLException {
     Connection con = Conexao.abrirConexao();
     String sql = "update usuario set senha = ?";
-    sql += " where codUsuario = ?";
+    sql += " where CodUsuario = ?";
 
     try {
       ps = con.prepareStatement(sql);
       ps.setString(1, usuarios.getLogin());
-      ps.setString(2, String.valueOf(usuarios.getCodUsuario()));
+      ps.setString(2, String.valueOf(usuarios.getSenha()));
+      ps.setString(3, String.valueOf(usuarios.getCodUsuario()));
       if (ps.executeUpdate() > 0) {
         System.out.println("Atualizado com sucesso!");
       }
@@ -129,7 +130,7 @@ public class UsuariosDAO {
 
   public List<UsuariosBean> listarUsuarios(String nome) {
     Connection con = Conexao.abrirConexao();
-    String sql = "select * from usuario where nome like ?";
+    String sql = "select * from usuario where Login like ?";
     ResultSet rs = null;
     List<UsuariosBean> listaUsuarios = new ArrayList<>();
     try {
@@ -182,7 +183,7 @@ public class UsuariosDAO {
 
   public UsuariosBean pesquisarPorUsuario(String login) {
     Connection con = Conexao.abrirConexao();
-    String sql = "select * from usuario where login = ?";
+    String sql = "select * from usuario where Login like ?";
     ResultSet rs = null;
     UsuariosBean usuario = new UsuariosBean();
     try {
