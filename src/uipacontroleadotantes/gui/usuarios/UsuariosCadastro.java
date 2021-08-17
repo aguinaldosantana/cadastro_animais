@@ -352,7 +352,7 @@ public class UsuariosCadastro extends javax.swing.JInternalFrame {
         model.setValueAt(String.valueOf(codUsuario), linha, 0);
         model.setValueAt(txtLogin.getText(), linha, 1);
         model.setValueAt(txtSenha.getPassword(), linha, 1);
-
+        
         limparCampos();
         }
     }//GEN-LAST:event_btnAtualizarActionPerformed
