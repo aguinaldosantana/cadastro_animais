@@ -6,9 +6,10 @@
 package uipacontroleadotantes.gui.animais;
 
 import java.awt.Component;
-import java.awt.event.KeyEvent;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
@@ -17,6 +18,8 @@ import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+import javax.swing.table.AbstractTableModel;
+
 import uipacontroleadotantes.banco.adotantes.AdotantesBean;
 import uipacontroleadotantes.banco.adotantes.AdotantesDAO;
 import uipacontroleadotantes.banco.animais.AnimaisBean;
@@ -63,12 +66,12 @@ public class AnimaisCadastro extends javax.swing.JInternalFrame {
         cbCastrado = new javax.swing.JCheckBox();
         jLabel3 = new javax.swing.JLabel();
         txtEspecie = new javax.swing.JTextField();
-        jLabel2 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
         cbAdotante = new javax.swing.JComboBox<>();
-        jLabel12 = new javax.swing.JLabel();
-        txtDataNascimento = new javax.swing.JFormattedTextField();
-        txtDataAdocao = new javax.swing.JFormattedTextField();
+        txtDataNascimento = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        txtDataAdocao = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
         btnCadastrar = new javax.swing.JButton();
         btnLimpar = new javax.swing.JButton();
@@ -91,6 +94,11 @@ public class AnimaisCadastro extends javax.swing.JInternalFrame {
 
         txtNome.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(204, 204, 204), 1, true));
         txtNome.setName(""); // NOI18N
+        txtNome.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtNomeActionPerformed(evt);
+            }
+        });
         txtNome.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txtNomeKeyReleased(evt);
@@ -126,18 +134,14 @@ public class AnimaisCadastro extends javax.swing.JInternalFrame {
             }
         });
 
-        jLabel2.setText("Data Nasc:");
-
         jLabel11.setText("Adotante:");
 
         cbAdotante.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecione..." }));
         cbAdotante.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(204, 204, 204), 1, true));
         cbAdotante.setName("cbSexo"); // NOI18N
 
-        jLabel12.setText("Data Adoção:");
-
         txtDataNascimento.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(204, 204, 204), 1, true));
-        txtDataNascimento.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(java.text.DateFormat.getDateInstance(java.text.DateFormat.MEDIUM))));
+        txtDataNascimento.setName("txtDataNascimento"); // NOI18N
         txtDataNascimento.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtDataNascimentoActionPerformed(evt);
@@ -149,8 +153,12 @@ public class AnimaisCadastro extends javax.swing.JInternalFrame {
             }
         });
 
+        jLabel4.setText("Data Nasc:");
+
+        jLabel6.setText("Data Adoção:");
+
         txtDataAdocao.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(204, 204, 204), 1, true));
-        txtDataAdocao.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter()));
+        txtDataAdocao.setName(""); // NOI18N
         txtDataAdocao.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtDataAdocaoActionPerformed(evt);
@@ -169,30 +177,30 @@ public class AnimaisCadastro extends javax.swing.JInternalFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel11)
-                    .addComponent(jLabel1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(cbAdotante, 0, 170, Short.MAX_VALUE)
-                        .addComponent(txtDataNascimento)))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel5))
-                        .addGap(30, 30, 30)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtEspecie)
-                            .addComponent(cbPorte, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel12)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel4))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtDataAdocao)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(cbAdotante, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtDataNascimento, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel11)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel6)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(txtDataAdocao)
+                    .addComponent(cbPorte, 0, 202, Short.MAX_VALUE)
+                    .addComponent(txtEspecie))
+                .addGap(34, 34, 34)
                 .addComponent(jLabel10)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -212,19 +220,23 @@ public class AnimaisCadastro extends javax.swing.JInternalFrame {
                     .addComponent(jLabel10)
                     .addComponent(cbSexo, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel5)
-                    .addComponent(cbPorte, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cbCastrado)
-                    .addComponent(txtDataNascimento, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel5)
+                        .addComponent(cbPorte, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(cbCastrado))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel4)
+                        .addComponent(txtDataNascimento, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel11)
-                    .addComponent(cbAdotante, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel12)
-                    .addComponent(txtDataAdocao, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel11)
+                        .addComponent(cbAdotante, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(txtDataAdocao, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel6)))
+                .addContainerGap(15, Short.MAX_VALUE))
         );
 
         jPanel2.setBackground(new java.awt.Color(204, 204, 204));
@@ -350,15 +362,15 @@ public class AnimaisCadastro extends javax.swing.JInternalFrame {
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 764, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 10, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 217, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 190, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(12, 12, 12))
@@ -378,23 +390,23 @@ public class AnimaisCadastro extends javax.swing.JInternalFrame {
             animaisBean.setNome(txtNome.getText());
             animaisBean.setEspecie(txtEspecie.getText());
             if (cbSexo.getSelectedIndex() > 0) {
-                char[] sexo = cbSexo.getSelectedItem().toString().split(" - ")[0].toCharArray();
+                String sexo = cbSexo.getSelectedItem().toString().split(" - ")[0];
                 animaisBean.setSexo(sexo);
             }
-            animaisBean.setDataNasc(LocalDate.parse(FormataData.BRtoUS(txtDataNascimento.getText())));
-            animaisBean.setPorte(cbPorte.getSelectedItem().toString().split(" - ")[0].toCharArray());
-            char[] castrado = new char[1];
-            if (cbCastrado.isSelected()) {
-                castrado[0] = 'S';
+            animaisBean.setDataNasc(txtDataNascimento.getText());
+            animaisBean.setPorte(cbPorte.getSelectedItem().toString().split(" - ")[0]);
+            String castrado = new String();
+            /*if (cbCastrado.isSelected()) {
+                 castrado[1] = 'S';
             } else {
                 castrado[0] = 'N';
-            }
+            }*/
             animaisBean.setCastrado(castrado);
             if (cbAdotante.getSelectedIndex() > 0) {
                 int codAdotante = Integer.parseInt(cbAdotante.getSelectedItem().toString().split(" - ")[0]);
                 animaisBean.setCodAdotante(codAdotante);
             }
-            animaisBean.setDataAdocao(LocalDate.parse(FormataData.BRtoUS(txtDataAdocao.getText())));
+            animaisBean.setDataAdocao(txtDataAdocao.getText());
 
             AnimaisDAO animaisDAO = new AnimaisDAO();
 
@@ -469,28 +481,28 @@ public class AnimaisCadastro extends javax.swing.JInternalFrame {
             animaisBean.setCodAnimal(codAnimal);
             animaisBean.setNome(txtNome.getText());
             animaisBean.setEspecie(txtEspecie.getText());
-            char[] sexo = new char[1];
+            String sexo = new String();
             if (cbSexo.getSelectedIndex() > 0) {
-                sexo = cbSexo.getSelectedItem().toString().split(" - ")[0].toCharArray();
+                sexo = cbSexo.getSelectedItem().toString().split(" - ")[0];
                 animaisBean.setSexo(sexo);
             }
-//            LocalDate data = LocalDate.parse((String) FormataData.BRtoUS(txtData.getText()));
-            animaisBean.setDataNasc(LocalDate.parse((String) FormataData.BRtoUS(txtDataNascimento.getText())));
-            char[] porte = cbPorte.getSelectedItem().toString().split(" - ")[0].toCharArray();
+            LocalDate data = LocalDate.parse((String) FormataData.BRtoUS(txtDataNascimento.getText()));
+            animaisBean.setDataNasc(FormataData.BRtoUS(txtDataNascimento.getText()));
+            String porte = cbPorte.getSelectedItem().toString().split(" - ")[0];
             animaisBean.setPorte(porte);
-            char[] castrado = new char[1];
-            if (cbCastrado.isSelected()) {
+            String castrado = new String();
+            /*if (cbCastrado.isSelected()) {
                 castrado[0] = 'S';
             } else {
                 castrado[0] = 'N';
-            }
+            }*/
             animaisBean.setCastrado(castrado);
             int codAdotante = 0;
             if (cbAdotante.getSelectedIndex() > 0) {
                 codAdotante = Integer.parseInt(cbAdotante.getSelectedItem().toString().split(" - ")[0]);
                 animaisBean.setCodAdotante(codAdotante);
             }
-            animaisBean.setDataAdocao(LocalDate.parse(FormataData.BRtoUS(txtDataAdocao.getText())));
+            animaisBean.setDataAdocao(FormataData.BRtoUS(txtDataAdocao.getText()));
 
             AnimaisDAO animaisDAO = new AnimaisDAO();
 
@@ -503,10 +515,10 @@ public class AnimaisCadastro extends javax.swing.JInternalFrame {
             model.setValueAt(String.valueOf(codAnimal), linha, 0);
             model.setValueAt(txtNome.getText(), linha, 1);
             model.setValueAt(txtEspecie.getText(), linha, 2);
-            model.setValueAt(String.copyValueOf(sexo), linha, 3);
-            model.setValueAt(FormataData.BRtoUS(txtDataNascimento.getText()), linha, 4);
-            model.setValueAt(String.copyValueOf(porte), linha, 5);
-            model.setValueAt(String.copyValueOf(castrado), linha, 6);
+            model.setValueAt(cbSexo.getEditor(), linha, 3);          
+            model.setValueAt(txtDataNascimento.getText(), linha, 4);
+            model.setValueAt(cbPorte.getEditor(), linha, 5);
+            model.setValueAt(cbCastrado.getText(), linha, 6);
             model.setValueAt(String.valueOf(codAdotante), linha, 7);
             model.setValueAt(FormataData.BRtoUS(txtDataAdocao.getText()), linha, 8);
 
@@ -547,29 +559,29 @@ public class AnimaisCadastro extends javax.swing.JInternalFrame {
         txtEspecie.setText(txtEspecie.getText().toUpperCase());
     }//GEN-LAST:event_txtEspecieKeyReleased
 
-    private void txtDataNascimentoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDataNascimentoKeyReleased
-        if (evt.getKeyCode() != KeyEvent.VK_BACK_SPACE) {
-            txtDataNascimento.setText(FormataData.validaData(txtDataNascimento.getText()));
-        }
-    }//GEN-LAST:event_txtDataNascimentoKeyReleased
+    private void txtEspecieActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEspecieActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtEspecieActionPerformed
 
-    private void txtDataAdocaoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDataAdocaoKeyReleased
-        if (evt.getKeyCode() != KeyEvent.VK_BACK_SPACE) {
-            txtDataAdocao.setText(FormataData.validaData(txtDataAdocao.getText()));
-        }
-    }//GEN-LAST:event_txtDataAdocaoKeyReleased
+    private void txtNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNomeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNomeActionPerformed
 
     private void txtDataNascimentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDataNascimentoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtDataNascimentoActionPerformed
 
+    private void txtDataNascimentoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDataNascimentoKeyReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtDataNascimentoKeyReleased
+
     private void txtDataAdocaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDataAdocaoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtDataAdocaoActionPerformed
 
-    private void txtEspecieActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEspecieActionPerformed
+    private void txtDataAdocaoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDataAdocaoKeyReleased
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtEspecieActionPerformed
+    }//GEN-LAST:event_txtDataAdocaoKeyReleased
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAtualizar;
@@ -584,16 +596,16 @@ public class AnimaisCadastro extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tblAnimais;
-    private javax.swing.JFormattedTextField txtDataAdocao;
-    private javax.swing.JFormattedTextField txtDataNascimento;
+    private javax.swing.JTextField txtDataAdocao;
+    private javax.swing.JTextField txtDataNascimento;
     private javax.swing.JTextField txtEspecie;
     private javax.swing.JTextField txtNome;
     // End of variables declaration//GEN-END:variables
@@ -614,7 +626,7 @@ public class AnimaisCadastro extends javax.swing.JInternalFrame {
                 ((JCheckBox) c).setSelected(false);
             }
         }
-        txtDataAdocao.setText(FormataData.UStoBR(LocalDate.now().toString()));
+       // txtDataAdocao.setText(FormataData.UStoBR(LocalDate.now().toString()));
         btnCadastrar.setEnabled(true);
         btnAtualizar.setEnabled(false);
         btnExcluir.setEnabled(false);
@@ -663,5 +675,106 @@ public class AnimaisCadastro extends javax.swing.JInternalFrame {
         } catch (SQLException ex) {
             Logger.getLogger(AnimaisCadastro.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    /**
+     *
+     * @author Aguinaldo/Kaue
+     */
+    public static class AnimaisTableModel extends AbstractTableModel {
+
+        private final List<AnimaisBean> dados = new ArrayList<>();
+        private final String[] colunas = {"CÓDIGO", "NOME", "ESPÉCIE", "SEXO", "DATA DE NASC.", "PORTE", "CASTRADO", "ADOTANTE", "DATA DE ADOÇÃO"};
+
+        @Override
+        public String getColumnName(int column) {
+            return colunas[column];
+        }
+
+        @Override
+        public int getRowCount() {
+            return dados.size();
+        }
+
+        @Override
+        public int getColumnCount() {
+            return colunas.length;
+        }
+
+        @Override
+        public Object getValueAt(int rowIndex, int columnIndex) {
+            switch(columnIndex) {
+                case 0:
+                    return dados.get(rowIndex).getCodAnimal();
+                case 1:
+                    return dados.get(rowIndex).getNome();
+                case 2:
+                    return dados.get(rowIndex).getEspecie();
+                case 3:
+                    return dados.get(rowIndex).getSexo();
+                case 4:
+                    return dados.get(rowIndex).getDataNasc();
+                case 5:
+                    return dados.get(rowIndex).getPorte();
+                case 6:
+                    return dados.get(rowIndex).getCastrado();
+                case 7:
+                    return dados.get(rowIndex).getCodAdotante();
+                case 8:
+                    return dados.get(rowIndex).getDataAdocao();
+            }
+            return null;
+        }
+
+        @Override
+        public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
+            switch(columnIndex) {
+                case 0:
+                    dados.get(rowIndex).setCodAnimal(Integer.parseInt((String) aValue));
+                    break;
+                case 1:
+                    dados.get(rowIndex).setNome((String) aValue);
+                    break;
+                case 2:
+                    dados.get(rowIndex).setEspecie((String) aValue);
+                    break;
+                case 3:
+                    dados.get(rowIndex).setSexo(((String) aValue));
+                    break;
+                case 4:
+                    dados.get(rowIndex).setDataNasc(((String) aValue));
+                    break;
+                case 5:
+                    dados.get(rowIndex).setPorte(((String) aValue));
+                    break;
+                case 6:
+                    dados.get(rowIndex).setCastrado(((String) aValue));
+                    break;
+                case 7:
+                    dados.get(rowIndex).setCodAdotante(Integer.parseInt((String) aValue));
+                    break;
+                case 8:
+                    dados.get(rowIndex).setDataNasc(((String) aValue));
+                    break;
+            }
+            this.fireTableRowsUpdated(rowIndex, rowIndex);
+        }
+
+        public void addRow(AnimaisBean animal) {
+            this.dados.add(animal);
+            this.fireTableDataChanged();
+        }
+
+        public void removeRow(int linha) {
+            this.dados.remove(linha);
+            this.fireTableRowsDeleted(linha, linha);
+        }
+
+        public void limpar(){
+            for (int i = this.getRowCount() - 1; i > -1; i--) {
+                this.removeRow(i);
+            }
+        }
+
     }
 }

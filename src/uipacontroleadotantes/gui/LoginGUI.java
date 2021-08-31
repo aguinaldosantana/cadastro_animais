@@ -68,7 +68,6 @@ public class LoginGUI extends javax.swing.JFrame {
         setFont(new java.awt.Font("aakar", 0, 10)); // NOI18N
         setMinimumSize(new java.awt.Dimension(350, 400));
         setUndecorated(true);
-        setPreferredSize(new java.awt.Dimension(350, 400));
         setResizable(false);
         setSize(new java.awt.Dimension(350, 400));
         getContentPane().setLayout(null);
@@ -129,7 +128,7 @@ public class LoginGUI extends javax.swing.JFrame {
             }
         });
 
-        cbBio.setText("Entar usando Biometria");
+        cbBio.setText("Entrar usando Biometria");
         cbBio.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbBioActionPerformed(evt);
@@ -198,7 +197,7 @@ public class LoginGUI extends javax.swing.JFrame {
 
             if (usuariosDAO.count() == 0) {
                 UsuariosBean usuarioBean = new UsuariosBean();
-                usuarioBean.setLogin("uipa");
+                usuarioBean.setLogin("admin");
                 usuarioBean.setSenha("uipa");
                 try {
                     usuariosDAO.inserir(usuarioBean);

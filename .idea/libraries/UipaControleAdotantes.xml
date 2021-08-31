@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="UipaControleAdotantes">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/UipaControleAdotantes.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
