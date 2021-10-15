@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="ControleAdotantes1">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/dist/ControleAdotantes.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

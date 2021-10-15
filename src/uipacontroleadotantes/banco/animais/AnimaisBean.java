@@ -16,12 +16,12 @@ public class AnimaisBean {
     private int codAnimal;
     private String nome;
     private String especie;
-    private char[] sexo;
-    private LocalDate dataNasc;
-    private char[] porte;
-    private char[] castrado;
+    private String sexo;
+    private String dataNasc;
+    private String porte;
+    private String castrado;
     private int codAdotante;
-    private LocalDate dataAdocao;
+    private String dataAdocao;
 
     public int getCodAnimal() {
         return codAnimal;
@@ -47,35 +47,35 @@ public class AnimaisBean {
         this.especie = especie;
     }
 
-    public char[] getSexo() {
+    public String getSexo() {
         return sexo;
     }
 
-    public void setSexo(char[] sexo) {
+    public void setSexo(String sexo) {
         this.sexo = sexo;
     }
 
-    public LocalDate getDataNasc() {
+    public String getDataNasc() {
         return dataNasc;
     }
 
-    public void setDataNasc(LocalDate dataNasc) {
+    public void setDataNasc(String dataNasc) {
         this.dataNasc = dataNasc;
     }
 
-    public char[] getPorte() {
+    public String getPorte() {
         return porte;
     }
 
-    public void setPorte(char[] porte) {
+    public void setPorte(String porte) {
         this.porte = porte;
     }
 
-    public char[] getCastrado() {
+    public String getCastrado() {
         return castrado;
     }
 
-    public void setCastrado(char[] castrado) {
+    public void setCastrado(String castrado) {
         this.castrado = castrado;
     }
 
@@ -87,11 +87,11 @@ public class AnimaisBean {
         this.codAdotante = codAdotante;
     }
 
-    public LocalDate getDataAdocao() {
+    public String getDataAdocao() {
         return dataAdocao;
     }
 
-    public void setDataAdocao(LocalDate dataAdocao) {
+    public void setDataAdocao(String dataAdocao) {
         this.dataAdocao = dataAdocao;
     }
 

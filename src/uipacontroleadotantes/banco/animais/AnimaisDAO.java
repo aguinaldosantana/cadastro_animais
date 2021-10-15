@@ -20,7 +20,7 @@ public class AnimaisDAO {
 
     public int inserir(AnimaisBean animal) throws SQLException {
         Connection con = Conexao.abrirConexao();
-        String sql = "insert into animal(Nome, Especie, Sexo, DataNasc, Porte, Castrado, CodAdotante, DataAdocao)values(?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "insert into animal(Nome, Especie, Raca, Sexo, DataNasc, Porte, Castrado, CodAdotante, DataAdocao, Obs)values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         ResultSet rs;
         int id = 0;
 
@@ -28,12 +28,13 @@ public class AnimaisDAO {
             ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, animal.getNome());
             ps.setString(2, animal.getEspecie());
-            ps.setString(3, String.valueOf(animal.getSexo()));
-            ps.setString(4, String.valueOf(animal.getDataNasc()));
-            ps.setString(5, String.valueOf(animal.getPorte()));
-            ps.setString(6, String.valueOf(animal.getCastrado()));
-            ps.setString(7, String.valueOf(animal.getCodAdotante()));
-            ps.setString(8, String.valueOf(animal.getDataAdocao()));
+            ps.setString(3, animal.getSexo());
+            ps.setString(4, animal.getDataNasc());
+            ps.setString(5, animal.getPorte());
+            ps.setString(6, animal.getCastrado());
+            ps.setInt(7, Integer.valueOf(animal.getCodAdotante()));
+            ps.setString(8, animal.getDataAdocao());
+            
             if (ps.executeUpdate() > 0) {
                 rs = ps.getGeneratedKeys();
                 rs.next();
@@ -51,7 +52,7 @@ public class AnimaisDAO {
 
     public void alterar(AnimaisBean animal) throws SQLException {
         Connection con = Conexao.abrirConexao();
-        String sql = "update animal set Nome=?, Especie=?, Sexo=?, DataNasc=?, Porte=?, Castrado=?, CodAdotante=?, DataAdocao=?";
+        String sql = "update animal set Nome = ?, Especie = ?, Sexo = ?, DataNasc = ?, Porte = ?, Castrado = ?, CodAdotante = ?, DataAdocao = ?";
         sql += " where CodAnimal = ?";
 
         try {
@@ -106,12 +107,12 @@ public class AnimaisDAO {
                     animaisBean.setCodAnimal(Integer.parseInt(rs.getString("CodAnimal")));
                     animaisBean.setNome(rs.getString("Nome"));
                     animaisBean.setEspecie(rs.getString("Especie"));
-                    animaisBean.setSexo(rs.getString("Sexo").toCharArray());
-                    animaisBean.setDataNasc(LocalDate.parse(rs.getString("DataNasc")));
-                    animaisBean.setPorte(rs.getString("Porte").toCharArray());
-                    animaisBean.setCastrado(rs.getString("Castrado").toCharArray());
+                    animaisBean.setSexo(rs.getString("Sexo"));
+                    animaisBean.setDataNasc(rs.getString("DataNasc"));
+                    animaisBean.setPorte(rs.getString("Porte"));
+                    animaisBean.setCastrado(rs.getString("Castrado"));
                     animaisBean.setCodAdotante(rs.getInt("CodAdotante"));
-                    animaisBean.setDataAdocao(LocalDate.parse(rs.getString("DataAdocao")));
+                    animaisBean.setDataAdocao(rs.getString("DataAdocao"));
                     listaAnimais.add(animaisBean);
                 }
                 System.out.println("Listado com sucesso!");
@@ -138,12 +139,12 @@ public class AnimaisDAO {
                 animaisBean.setCodAnimal(Integer.parseInt(rs.getString("CodAnimal")));
                 animaisBean.setNome(rs.getString("Nome"));
                 animaisBean.setEspecie(rs.getString("Especie"));
-                animaisBean.setSexo(rs.getString("Sexo").toCharArray());
-                animaisBean.setDataNasc(LocalDate.parse(rs.getString("DataNasc")));
-                animaisBean.setPorte(rs.getString("Porte").toCharArray());
-                animaisBean.setCastrado(rs.getString("Castrado").toCharArray());
+                animaisBean.setSexo(rs.getString("Sexo"));
+                animaisBean.setDataNasc(rs.getString("DataNasc"));
+                animaisBean.setPorte(rs.getString("Porte"));
+                animaisBean.setCastrado(rs.getString("Castrado"));
                 animaisBean.setCodAdotante(rs.getInt("CodAdotante"));
-                animaisBean.setDataAdocao(LocalDate.parse(rs.getString("DataAdocao")));
+                animaisBean.setDataAdocao(rs.getString("DataAdocao"));
                 System.out.println("Localizado com sucesso!");
                 return animaisBean;
             }
@@ -170,12 +171,12 @@ public class AnimaisDAO {
                     animaisBean.setCodAnimal(Integer.parseInt(rs.getString("CodAnimal")));
                     animaisBean.setNome(rs.getString("Nome"));
                     animaisBean.setEspecie(rs.getString("Especie"));
-                    animaisBean.setSexo(rs.getString("Sexo").toCharArray());
-                    animaisBean.setDataNasc(LocalDate.parse(rs.getString("DataNasc")));
-                    animaisBean.setPorte(rs.getString("Porte").toCharArray());
-                    animaisBean.setCastrado(rs.getString("Castrado").toCharArray());
+                    animaisBean.setSexo(rs.getString("Sexo"));
+                    animaisBean.setDataNasc(rs.getString("DataNasc"));
+                    animaisBean.setPorte(rs.getString("Porte"));
+                    animaisBean.setCastrado(rs.getString("Castrado"));
                     animaisBean.setCodAdotante(rs.getInt("CodAdotante"));
-                    animaisBean.setDataAdocao(LocalDate.parse(rs.getString("DataAdocao")));
+                    animaisBean.setDataAdocao(rs.getString("DataAdocao"));
                     listaAnimais.add(animaisBean);
                 }
                 System.out.println("Localizado com sucesso!");
@@ -204,12 +205,12 @@ public class AnimaisDAO {
                     animaisBean.setCodAnimal(Integer.parseInt(rs.getString("CodAnimal")));
                     animaisBean.setNome(rs.getString("Nome"));
                     animaisBean.setEspecie(rs.getString("Especie"));
-                    animaisBean.setSexo(rs.getString("Sexo").toCharArray());
-                    animaisBean.setDataNasc(LocalDate.parse(rs.getString("DataNasc")));
-                    animaisBean.setPorte(rs.getString("Porte").toCharArray());
-                    animaisBean.setCastrado(rs.getString("Castrado").toCharArray());
+                    animaisBean.setSexo(rs.getString("Sexo"));
+                    animaisBean.setDataNasc(rs.getString("DataNasc"));
+                    animaisBean.setPorte(rs.getString("Porte"));
+                    animaisBean.setCastrado(rs.getString("Castrado"));
                     animaisBean.setCodAdotante(rs.getInt("CodAdotante"));
-                    animaisBean.setDataAdocao(LocalDate.parse(rs.getString("DataAdocao")));
+                    animaisBean.setDataAdocao(rs.getString("DataAdocao"));
                     listaAnimais.add(animaisBean);
                 }
                 System.out.println("Listado com sucesso!");
@@ -222,5 +223,4 @@ public class AnimaisDAO {
         }
         return null;
     }
-
 }

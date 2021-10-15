@@ -13,18 +13,6 @@ import java.util.logging.Logger;
  */
 public class Conexao {
 
-    /*private static String HOST = "campus1-iesi.ddns.net";
-    private static String PORTA = "9005";
-    private static String BANCO = "cc1";
-    private static String USER = "mckatoo";
-    private static String PASS = "123456";*/
-    
-    /*private static String HOST = "srv184.prodns.com.br";
-    private static String PORTA = "3306";
-    private static String BANCO = "isist673_cda";
-    private static String USER = "isist673_cda";
-    private static String PASS = "teste123";*/
-    
     private static String HOST = "127.0.0.1";
     private static String PORTA = "3306";
     private static String BANCO = "cda";

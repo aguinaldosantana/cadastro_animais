@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="extras">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/extras/json-20180813.jar!/" />
+      <root url="jar://$PROJECT_DIR$/extras/mysql-connector-java-8.0.18.jar!/" />
+      <root url="jar://$PROJECT_DIR$/extras/ConsultaCEP.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
