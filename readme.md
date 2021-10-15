@@ -11,9 +11,4 @@
 - [ ] Níveis de acesso adm, consulta, operação.
 
 ## Executável JAR
-<<<<<<< HEAD
 [UIPA-CONTROLE_ADOTANTES.jar](https://github.com/aguinaldosantana/cadastro_animais/blob/master/UipaControleAdotantes.jar)
-=======
-[UIPA-CONTROLE_ADOTANTES.jar](https://github.com/aguinaldosantana/cadastro_animais/blob/master/UipaControleAdotantes.jar)
-
->>>>>>> dev
